@@ -1,0 +1,101 @@
+function Left () {
+    for (let index = 0; index < 5; index++) {
+        maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, SP * 0.7)
+        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 0)
+        basic.pause(XN)
+        if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
+            break;
+        }
+        if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 1 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 1) {
+            break;
+        }
+    }
+}
+function Forward () {
+    maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, SP)
+}
+function Right () {
+    for (let index = 0; index < 5; index++) {
+        maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 0)
+        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, SP * 0.7)
+        basic.pause(XN)
+        if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
+            break;
+        }
+        if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 1 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 1) {
+            break;
+        }
+    }
+}
+function Backward () {
+    maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CCW, SP * 0.3)
+    basic.pause(XN)
+}
+let NU = 0
+let SP = 0
+let XN = 0
+XN = 0
+SP = 100
+let LR = 1
+basic.forever(function () {
+    if (SP < 11 && SP > 0) {
+        basic.showNumber(0)
+    } else {
+        if (SP < 21 && SP > 10) {
+            basic.showNumber(1)
+        } else {
+            if (SP < 31 && SP > 20) {
+                basic.showNumber(2)
+            } else {
+                if (SP < 41 && SP > 30) {
+                    basic.showNumber(3)
+                } else {
+                    if (SP < 51 && SP > 40) {
+                        basic.showNumber(4)
+                    } else {
+                        if (SP < 61 && SP > 50) {
+                            basic.showNumber(5)
+                        } else {
+                            if (SP < 71 && SP > 60) {
+                                basic.showNumber(6)
+                            } else {
+                                if (SP < 81 && SP > 70) {
+                                    basic.showNumber(7)
+                                } else {
+                                    if (SP < 91 && SP > 80) {
+                                        basic.showNumber(8)
+                                    } else {
+                                        if (SP < 101 && SP > 90) {
+                                            basic.showNumber(9)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+})
+basic.forever(function () {
+    NU = SP
+    if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
+        LR = 1
+        Forward()
+    } else {
+        if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 1 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
+            LR = 0
+            Left()
+        } else {
+            if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 1) {
+                LR = 2
+                Right()
+            } else {
+                if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 1 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 1) {
+                    Backward()
+                }
+            }
+        }
+    }
+})
